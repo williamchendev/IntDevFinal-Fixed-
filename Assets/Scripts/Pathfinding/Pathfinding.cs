@@ -16,8 +16,13 @@ public class Pathfinding : MonoBehaviour
 	//Path Finding Methods
 	public List<Node> findPath(Vector3 start, Vector3 target)
 	{
+<<<<<<< HEAD
 		Node start_node = grid.nodeFromPositionClamp(start);
 		Node target_node = grid.nodeFromPositionClamp(target);
+=======
+		Node start_node = grid.nodeFromPosition(start);
+		Node target_node = grid.nodeFromPosition(target);
+>>>>>>> upstream/master
 		
 		Heap<Node> open_set = new Heap<Node>(grid.grid_maxsize);
 		HashSet<Node> closed_set = new HashSet<Node>();
@@ -114,7 +119,11 @@ public class Pathfinding : MonoBehaviour
 		return waypoints;
 	}
 	
+<<<<<<< HEAD
 	public bool checkPoints(Vector3 point_a, Vector3 point_b)
+=======
+	private bool checkPoints(Vector3 point_a, Vector3 point_b)
+>>>>>>> upstream/master
 	{
 		if (Physics.Linecast(point_a, point_b, grid.solids_layer))
 		{
@@ -123,7 +132,11 @@ public class Pathfinding : MonoBehaviour
 		return false;
 	}
 	
+<<<<<<< HEAD
 	public bool checkPoints(Vector3 point_a, Vector3 point_b, float thickness)
+=======
+	private bool checkPoints(Vector3 point_a, Vector3 point_b, float thickness)
+>>>>>>> upstream/master
 	{
 		float distance = Vector3.Distance(point_a, point_b);
 		int iterations = Mathf.RoundToInt(distance / thickness);
@@ -136,10 +149,13 @@ public class Pathfinding : MonoBehaviour
 			{
 				return true;
 			}
+<<<<<<< HEAD
 			if (!grid.nodeFromPosition(origin).empty)
 			{
 				return true;
 			}
+=======
+>>>>>>> upstream/master
 		}
 		return false;
 	}

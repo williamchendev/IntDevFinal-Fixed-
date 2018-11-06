@@ -71,8 +71,11 @@ public class GridBehaviour : MonoBehaviour
 	[SerializeField] private LayerMask solids_mask;
 	[SerializeField] private Vector2 grid_size = new Vector2(20, 20);
 	[SerializeField] private float node_radius = 0.25f;
+<<<<<<< HEAD
 	[Range(0, 3)] 
 	[SerializeField] private int node_outline;
+=======
+>>>>>>> upstream/master
 	
 	//Variables
 	private bool draw_debug;
@@ -93,10 +96,13 @@ public class GridBehaviour : MonoBehaviour
 		grid = new Node[grid_width, grid_hight];
 
 		createGrid();
+<<<<<<< HEAD
 		if (node_outline != 0)
 		{
 			filterGrid();
 		}
+=======
+>>>>>>> upstream/master
 	}
 
 	//Methods
@@ -114,6 +120,7 @@ public class GridBehaviour : MonoBehaviour
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	private void filterGrid()
 	{
@@ -152,6 +159,8 @@ public class GridBehaviour : MonoBehaviour
 			}
 		}
 	}
+=======
+>>>>>>> upstream/master
 	
 	public List<Node> getNeighbours(Node node) {
 		List<Node> neighbours = new List<Node>();
@@ -173,6 +182,7 @@ public class GridBehaviour : MonoBehaviour
 		return neighbours;
 	}
 	
+<<<<<<< HEAD
 	public Node nodeFromPositionClamp(Vector3 position)
 	{
 		Node temp_node = nodeFromPosition(position);
@@ -197,6 +207,8 @@ public class GridBehaviour : MonoBehaviour
 		return temp_node;
 	}
 	
+=======
+>>>>>>> upstream/master
 	public Node nodeFromPosition(Vector3 position)
 	{
 		Vector3 world_position = position - transform.position;
@@ -237,7 +249,11 @@ public class GridBehaviour : MonoBehaviour
 	//Draw Debug
 	void OnDrawGizmos()
 	{
+<<<<<<< HEAD
 		Gizmos.color = Color.blue;
+=======
+		Gizmos.color = Color.white;
+>>>>>>> upstream/master
 		Gizmos.DrawWireCube(transform.position, new Vector3(grid_size.x, node_dia, grid_size.y));
 
 		if (show_debug && draw_debug)
