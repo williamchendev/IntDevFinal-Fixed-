@@ -22,6 +22,11 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Cameras" t="Include">
+            <e p="CameraManager.cs" t="Include" />
+            <e p="CameraProximityTrigger.cs" t="Include" />
+            <e p="CameraTrigger.cs" t="Include" />
+          </e>
           <e p="EnemyBehaviour.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
           <e p="Pathfinding" t="Include">

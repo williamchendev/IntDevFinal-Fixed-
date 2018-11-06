@@ -237,7 +237,7 @@ public class GridBehaviour : MonoBehaviour
 	//Draw Debug
 	void OnDrawGizmos()
 	{
-		Gizmos.color = Color.white;
+		Gizmos.color = Color.blue;
 		Gizmos.DrawWireCube(transform.position, new Vector3(grid_size.x, node_dia, grid_size.y));
 
 		if (show_debug && draw_debug)

@@ -34,7 +34,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	void Start () {
 		//Components
 		rb = gameObject.GetComponent<Rigidbody>();
-		rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		rb.constraints = RigidbodyConstraints.FreezeRotation;
 		path = gameObject.AddComponent<Pathfinding>();
 		player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
 		
@@ -105,17 +105,27 @@ public class EnemyBehaviour : MonoBehaviour {
 							}
 							else
 							{
-								if (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, move_angle)) < 10)
+								if (GridBehaviour.instance.nodeFromPosition(transform.position).empty)
 								{
-									lock_on = true;
+									if (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, move_angle)) < 10)
+									{
+										lock_on = true;
+									}
+
+									transform.eulerAngles = new Vector3(transform.eulerAngles.x, Mathf.MoveTowardsAngle(transform.eulerAngles.y, move_angle, turn_spd), transform.eulerAngles.z);
 								}
-								transform.eulerAngles = new Vector3(transform.eulerAngles.x, Mathf.MoveTowardsAngle(transform.eulerAngles.y, move_angle, turn_spd), transform.eulerAngles.z);
+								else
+								{
+									if (Vector2.Distance(temp_current_position, temp_target_position) > 0.05f) {
+										transform.eulerAngles = new Vector3(transform.eulerAngles.x, Mathf.MoveTowardsAngle(transform.eulerAngles.y, move_angle, turn_spd), transform.eulerAngles.z);
+									}
+								}
 							}
 						}
 						else
 						{
 							lock_on = false;
-							if (Vector2.Distance(temp_current_position, temp_target_position) > 0.5f) {
+							if (Vector2.Distance(temp_current_position, temp_target_position) > 0.05f) {
 								transform.eulerAngles = new Vector3(transform.eulerAngles.x, Mathf.MoveTowardsAngle(transform.eulerAngles.y, move_angle, turn_spd), transform.eulerAngles.z);
 							}
 						}
@@ -126,7 +136,7 @@ public class EnemyBehaviour : MonoBehaviour {
 						velocity = new Vector2(Mathf.Cos(temp_angle), Mathf.Sin(temp_angle)) * (spd * angle_spd_modify);
 
 						//Check if near target
-						if (Vector2.Distance(temp_current_position, temp_target_position) < 1f)
+						if (Vector2.Distance(temp_current_position, temp_target_position) < 0.2f)
 						{
 							path_index++;
 							FixedUpdate();
@@ -161,6 +171,15 @@ public class EnemyBehaviour : MonoBehaviour {
 		path_index = 0;
 		path_array = path.findPathArray(transform.position, target_pos);
 
+		if (path_array.Length > 1)
+		{
+			if (Vector2.Distance(path_array[0], new Vector2(transform.position.x, transform.position.z)) < 2.5f)
+			{
+				//path_index = 1;
+			}
+		}
+
+		//Debug Path Points
 		/*
 		for (int i = 0; i < path_array.Length; i++)
 		{
@@ -192,8 +211,17 @@ public class EnemyBehaviour : MonoBehaviour {
 		{
 			for (int i = 0; i < path_array.Length; i++)
 			{
-				Gizmos.color = Color.black;
+				Gizmos.color = Color.magenta;
+				if (path_index < i)
+				{
+					Gizmos.color = Color.blue;
+				}
+
 				Gizmos.DrawSphere(new Vector3(path_array[i].x, GridBehaviour.instance.transform.position.y, path_array[i].y), 0.5f);
+				if (i < path_array.Length - 1)
+				{
+					Gizmos.DrawLine(new Vector3(path_array[i].x, GridBehaviour.instance.transform.position.y, path_array[i].y), new Vector3(path_array[i + 1].x, GridBehaviour.instance.transform.position.y, path_array[i + 1].y));
+				}
 			}
 		}
 	}

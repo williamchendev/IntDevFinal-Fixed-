@@ -32,7 +32,7 @@ public class PlayerBehaviour : MonoBehaviour {
 		//Components
 		gm = GameManager.instance;
 		rb = gameObject.GetComponent<Rigidbody>();
-		rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		rb.constraints = RigidbodyConstraints.FreezeRotation;
 		//hp = gameObject.GetComponent<HealthPoints>();
 		
 		//Settings
@@ -90,6 +90,18 @@ public class PlayerBehaviour : MonoBehaviour {
 		if (velocity != Vector2.zero)
 		{
 			rb.MovePosition(transform.position + new Vector3(velocity.x, 0, velocity.y));
+		}
+	}
+
+	void OnTriggerEnter(Collider collision)
+	{
+		//Check for Camera Trigger
+		if (collision.gameObject.CompareTag("Finish"))
+		{
+			if (collision.GetComponent<CameraTrigger>() != null)
+			{
+				collision.GetComponent<CameraTrigger>().switchCamera();
+			}
 		}
 	}
 
